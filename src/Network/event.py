@@ -12,6 +12,9 @@ class Event:
         self.__probability = probability
         self.__event = event
 
+    def variables(self):
+        return list(self.__event.keys())
+
     def set_probability(self, probability):
         self.__probability = probability
 
@@ -21,6 +24,12 @@ class Event:
     def get_value(self, var):
         return self.__event[var]
 
+    def get_values_from_variables(self, variables):
+        res = []
+        for var in variables:
+            res.append(self.__event[var])
+        return res
+
     def remove_var(self, var):
         del self.__event[var]
 
@@ -29,6 +38,15 @@ class Event:
             if self.__event[variable] != other.__event[variable]:
                 return False
         return True
+
+    def combine_events(self, other):
+        # This method receives two events and returns a dictionary with the full event.
+        res = {}
+        for x1 in self.variables():
+            res[x1] = self.__event[x1]
+        for x2 in other.variables():
+            res[x2] = self.__event[x2]
+        return res
 
     @staticmethod
     def deepcopy(other):

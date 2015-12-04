@@ -18,12 +18,6 @@ class Variable:
     def alias(self):
         return self.__alias
 
-    def set_table(self, var, values, parents):
-        j = values[0]
-        for l in range(1,len(values)):
-            j = j * parents[l] + values[l]
-        return j
-
     def __str__(self):
         return '[values: ' + str(self.__values) + '; alias: ' + str(self.__alias) + \
                '; parents:' + str(self.__parents) + ']'

@@ -12,7 +12,7 @@ class Table:
         # Add an event to the table.
         self.__events.append(event)
 
-    def update_event(self, old_event, prob):
+    def update_event(self, old_event):
         # This method will look into the current table and check if
         # it already has an entry for that event, and if it's true
         # will update its probability, otherwise will add a new
@@ -38,7 +38,7 @@ class Table:
             aux_event.remove(variable)
             # Updates the table with the information for the old event
             # and the current information of the table.
-            new_table.update_event(aux_event, aux_event.probability())
+            new_table.update_event(aux_event)
         return new_table
 
     def variables_in_common(self, other):
@@ -53,9 +53,15 @@ class Table:
         # This method returns a new table with the result of the multiplication of
         # the two entered tables.
         new_vars = self.union_of_variables(other)
-        # Instantiate a new Table object
+        common_vars = self.variables_in_common(other)
+        # Creates a new factor with information from the other two previous tables.
         new_table = Table(new_vars)
-
-        for
-        return 0
+        for first_event in self.__events:
+            for second_event in other.__events:
+                if first_event.get_values_from_variables(common_vars) == second_event.get_values_from_variables(common_vars):
+                    # Find the appropriate event for this combination of variables.
+                    aux_dict = first_event.combine_events(second_event)
+                    # Add the newly found event to the new factor table.
+                    new_table.add_event(Event(aux_dict, first_event.probability() * second_event.probability()))
+        return new_table
 
