@@ -12,6 +12,23 @@ class Table:
         # Add an event to the table.
         self.__events.append(event)
 
+    def remove_event(self, event):
+        # Remove certain event from the table.
+        self.__events.remove(event)
+
+    def has_variable(self, variable):
+        # Returns a boolean depending if it has the variable in the table.
+        return variable in self.__variables
+
+    def evidence_eliminate(self, evidences):
+        # Eliminate events that have the same values for the
+        # variables as the evidence.
+        for event in self.__events:
+            for evidence in evidences.keys():
+                if event.get_value(evidence) == evidences[evidence]:
+                    self.remove_event(event)
+                    break
+
     def update_event(self, old_event):
         # This method will look into the current table and check if
         # it already has an entry for that event, and if it's true
