@@ -27,6 +27,12 @@ class Query:
     def evidence(self):
         return self.__evidence
 
+    def query_check(self, network):
+        """
+        Code for this part is missing.
+        """
+        return True
+
     def __repr__(self):
         r = 'QUERY: \n'
         r += self.__wanted_variable +'\n'

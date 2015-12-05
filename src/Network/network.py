@@ -85,6 +85,9 @@ class Network:
                     return k
         return None
 
+    def get_factors(self):
+        return 0
+
     def __repr__(self):
         r = '['
         for var in self.__nodes.keys():
