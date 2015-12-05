@@ -21,10 +21,13 @@ class Problem:
         for var in ordering:
             # Get factors with 'var' in them.
             factors_with_var = []
+            factors_in = []
             for f in factors:
                 if f.has_variable(var):
                     factors_with_var.append(f)
-                    factors.remove(f)
+                else:
+                    factors_in.append(f)
+            factors = factors_in
             # Multiply all the factors with 'var' in them.
             new_factor = factors_with_var.pop()
             while factors_with_var:
@@ -36,3 +39,4 @@ class Problem:
             factors.append(new_factor)
             #### NORMALIZATION IS MISSING
         return factors
+

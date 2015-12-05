@@ -1,5 +1,6 @@
 import sys
 from problem.query import Query
+from problem.problem import Problem
 from Network.network import Network
 
 
@@ -13,6 +14,9 @@ net = Network.from_file('test_files/enunciado.bn')
 
 print(net)
 
+res = Problem.ve_inference(net, qr, ['earthquake', 'alarm'])
+
+print('her')
 
 def main(args):
     return 0

@@ -18,6 +18,9 @@ class Variable:
     def alias(self):
         return self.__alias
 
+    def table(self):
+        return self.__table
+
     def set_table(self, table):
         self.__table = table
 

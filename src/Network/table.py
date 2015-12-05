@@ -23,11 +23,15 @@ class Table:
     def evidence_eliminate(self, evidences):
         # Eliminate events that have the same values for the
         # variables as the evidence.
+        new_events = []
         for event in self.__events:
+            is_good_event = True
             for evidence in evidences.keys():
-                if event.get_value(evidence) == evidences[evidence]:
-                    self.remove_event(event)
-                    break
+                if self.has_variable(evidence) and event.get_value(evidence) != evidences[evidence]:
+                    is_good_event = False
+            if is_good_event:
+                 new_events.append(event)
+        self.__events = new_events
 
     def update_event(self, old_event):
         # This method will look into the current table and check if

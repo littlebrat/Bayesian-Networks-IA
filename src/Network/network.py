@@ -107,7 +107,10 @@ class Network:
         return None
 
     def get_factors(self):
-        return 0
+        res = []
+        for key in self.__nodes.keys():
+            res.append(Table.deepcopy(self.__nodes[key].table()))
+        return res
 
     def __repr__(self):
         r = ''
