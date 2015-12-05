@@ -1,4 +1,10 @@
 import sys
+from problem.query import Query
+
+
+qr = Query.from_file('test_files/enunciado.in')
+
+print(qr)
 
 
 def main(args):

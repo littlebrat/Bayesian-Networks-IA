@@ -81,4 +81,3 @@ class Table:
                     # Add the newly found event to the new factor table.
                     new_table.add_event(Event(aux_dict, first_event.probability() * second_event.probability()))
         return new_table
-
