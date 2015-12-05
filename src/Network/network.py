@@ -1,5 +1,6 @@
 from Network.variable import Variable
-
+from Network.table import Table
+from Network.event import Event
 
 class Network:
 
@@ -16,47 +17,64 @@ class Network:
         net = Network()
         # this method loads a file into a object of this class.
         with open(path) as file:
-            if path[-3:] is '.bn':
-                while True:
-                    # Reads the line and splits the line in an array of words
-                    line = file.readline()
-                    words = line.split()
-                    # Verify if we are in a case of a VAR description or a CPT description.
-                    if words[0] is 'VAR':
-                        no_endline = True
+            line = file.readline()
+            while line != '':
+                # Reads the line and splits the line in an array of words
+                words = line.split()
+                # Verify if we are in a case of a VAR description or a CPT description.
+                if len(words) > 0:
+                    if words[0] == 'VAR':
                         name = None
                         alias = None
                         parents = []
                         values = []
-                        while no_endline:
-                            line = file.readline()
+                        line = file.readline()
+                        while line != '\n':
                             words = line.split()
-                            if words[0] is 'name':
-                                name = words[1]
-                            elif words[0] is 'alias':
-                                alias = words[1]
-                            elif words[0] is 'parents':
-                                parents = words[1:len(words)]
-                            elif words[0] is 'values':
-                                values = words[1:len(words)]
-                            else:
-                                no_endline = False
-                        net.add_var(name, alias, parents, values)
-                    elif words[0] is 'CPT':
-                        no_endline = True
-                        var = None
-
-                        while no_endline:
+                            if words[0] == 'name':
+                                name = words[1].lower()
+                            elif words[0] == 'alias':
+                                alias = words[1].lower()
+                            elif words[0] == 'parents':
+                                parents = [w.lower() for w in words[1:len(words)]]
+                            elif words[0] == 'values':
+                                values = [w.lower() for w in words[1:len(words)]]
                             line = file.readline()
+                        net.add_var(name, values, parents, alias)
+                    elif words[0] == 'CPT':
+                        line = file.readline()
+                        vars_table = []
+                        aux_table = None
+                        while line != '\n' and line != '':
                             words = line.split()
-                            if words[0] is 'var':
-                                var = words[1]
-                                var = net.real_name(var)
-
-                    elif words[0] is '#':
-                        continue
-            else:
-                return Exception('File has not the appropriate extension.')
+                            if words[0] == 'var':
+                                var = net.real_name(words[1].lower())
+                                vars_table.append(var)
+                                parents = net.__nodes[var].parents()
+                                for i in range(len(parents)):
+                                    vars_table.append(net.real_name(parents[i]))
+                                aux_table = Table(vars_table)
+                                line = file.readline()
+                            elif words[0] == 'table':
+                                if len(words) > 1 and (len(words) - 1) % (len(vars_table) + 1) == 0:
+                                    for i in range(1, len(words), len(vars_table) + 1):
+                                        event = {}
+                                        for j in range(0, len(vars_table)):
+                                            event[vars_table[j]] = words[i + j]
+                                        prob = float(words[i + len(vars_table)])
+                                        aux_table.add_event(Event(event, prob))
+                                line = file.readline()
+                                while line != '\n' and line != '':
+                                    words = line.split()
+                                    event = {}
+                                    for i in range(len(words) - 1):
+                                        event[vars_table[i]] = words[i].lower()
+                                    prob = float(words[-1])
+                                    aux_table.add_event(Event(event, prob))
+                                    line = file.readline()
+                            var = net.var(vars_table[0])
+                            var.set_table(aux_table)
+                line = file.readline()
         return net
 
     def add_var(self, name, values, parents=None, alias=None):
@@ -68,7 +86,10 @@ class Network:
         :param alias:
         :return: void
         """
-        self.__nodes[name] = Variable(values, parents, alias)
+        self.__nodes[name] = Variable(values, alias, parents)
+
+    def var(self, name):
+        return self.__nodes[name]
 
     def real_name(self, name):
         """
@@ -81,7 +102,7 @@ class Network:
             return name
         else:
             for k in self.__nodes.keys():
-                if name is self.__nodes[k].alias:
+                if name == self.__nodes[k].alias():
                     return k
         return None
 

@@ -34,4 +34,5 @@ class Problem:
             new_factor.sum_on_var(var)
             # Add factor to the remaining tables.
             factors.append(new_factor)
-        return 0
+            #### NORMALIZATION IS MISSING
+        return factors

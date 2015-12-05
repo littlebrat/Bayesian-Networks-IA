@@ -7,7 +7,7 @@ class Variable:
         self.__alias = alias
         self.__values = values
         self.__parents = parents
-        self.__table = Table(values, parents)
+        self.__table = None
 
     def parents(self):
         return self.__parents
@@ -17,6 +17,9 @@ class Variable:
 
     def alias(self):
         return self.__alias
+
+    def set_table(self, table):
+        self.__table = table
 
     def __str__(self):
         return '[values: ' + str(self.__values) + '; alias: ' + str(self.__alias) + \

@@ -52,3 +52,6 @@ class Event:
     def deepcopy(other):
         new_event = deepcopy(other.__event)
         return Event(new_event, other.__probability)
+
+    def __repr__(self):
+        

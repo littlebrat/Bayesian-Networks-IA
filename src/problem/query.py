@@ -13,12 +13,12 @@ class Query:
             for line in file:
                 words = line.split()
                 if len(words) == 2 and words[0] == 'QUERY':
-                    qr.__wanted_variable = words[1]
+                    qr.__wanted_variable = words[1].lower()
                 elif len(words) > 1 and words[0] == 'EVIDENCE':
                     quantity = int(words[1])
                     if len(words) == 2 * quantity + 2:
                         for i in range(2, 2 * quantity + 1, 2):
-                            qr.__evidence[words[i]] = words[i+1]
+                            qr.__evidence[words[i].lower()] = words[i+1].lower()
         return qr
 
     def wanted_variable(self):
