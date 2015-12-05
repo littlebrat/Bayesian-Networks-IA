@@ -21,8 +21,6 @@ class Variable:
     def set_table(self, table):
         self.__table = table
 
-    def __str__(self):
-        return '[values: ' + str(self.__values) + '; alias: ' + str(self.__alias) + \
-               '; parents:' + str(self.__parents) + ']'
-
-
+    def __repr__(self):
+        return 'values: ' + str(self.__values) + '\n' + 'alias: ' + str(self.__alias) + '\n' \
+               + 'parents:' + str(self.__parents) + '\n' + 'table: \n' + str(self.__table)

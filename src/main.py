@@ -7,9 +7,11 @@ qr = Query.from_file('test_files/enunciado.in')
 
 print(qr)
 
+print()
+
 net = Network.from_file('test_files/enunciado.bn')
 
-
+print(net)
 
 
 def main(args):

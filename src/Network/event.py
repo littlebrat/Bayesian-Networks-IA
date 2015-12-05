@@ -54,4 +54,4 @@ class Event:
         return Event(new_event, other.__probability)
 
     def __repr__(self):
-        
+        return 'Event: ' + str(self.__event) + '; Prob: ' + str(self.__probability)

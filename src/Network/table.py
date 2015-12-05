@@ -81,3 +81,16 @@ class Table:
                     # Add the newly found event to the new factor table.
                     new_table.add_event(Event(aux_dict, first_event.probability() * second_event.probability()))
         return new_table
+
+    @staticmethod
+    def deepcopy(other):
+        t = Table(deepcopy(other.__variables))
+        for e in other.__events:
+            t.add_event(Event.deepcopy(e))
+        return t
+
+    def __repr__(self):
+        r = 'Vars: ' + str(self.__variables) + '\n'
+        for x in self.__events:
+            r += str(x) + '\n'
+        return r[:-1]

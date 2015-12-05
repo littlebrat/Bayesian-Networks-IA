@@ -110,7 +110,7 @@ class Network:
         return 0
 
     def __repr__(self):
-        r = '['
+        r = ''
         for var in self.__nodes.keys():
-            r += 'var: ' + var + ' = ' + str(self.__nodes[var]) + '; '
-        return r + ']'
+            r += 'var: ' + var + '\n' + str(self.__nodes[var]) + '\n \n'
+        return r
