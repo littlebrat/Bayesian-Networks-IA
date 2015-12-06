@@ -43,9 +43,9 @@ class Event:
         # This method receives two events and returns a dictionary with the full event.
         res = {}
         for x1 in self.variables():
-            res[x1] = self.__event[x1]
+            res[x1] = self.__event.get(x1)
         for x2 in other.variables():
-            res[x2] = self.__event[x2]
+            res[x2] = self.__event.get(x2)
         return res
 
     @staticmethod

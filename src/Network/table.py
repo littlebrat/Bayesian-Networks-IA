@@ -56,7 +56,7 @@ class Table:
             # For each event in the old table make a copy of it without
             # the unwanted variable.
             aux_event = Event.deepcopy(event)
-            aux_event.remove(variable)
+            aux_event.remove_var(variable)
             # Updates the table with the information for the old event
             # and the current information of the table.
             new_table.update_event(aux_event)
