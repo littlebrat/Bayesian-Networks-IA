@@ -41,8 +41,8 @@ class Table:
         for new_event in self.__events:
             if old_event.is_same_event(new_event):
                 new_event.set_probability(new_event.probability()+old_event.probability())
-            else:
-                self.add_event(old_event)
+                return
+        self.add_event(old_event)
 
     def sum_on_var(self, variable):
         # This method returns the sum of the probabilities entries with 'variable'.

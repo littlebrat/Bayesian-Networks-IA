@@ -45,7 +45,7 @@ class Event:
         for x1 in self.variables():
             res[x1] = self.__event.get(x1)
         for x2 in other.variables():
-            res[x2] = self.__event.get(x2)
+            res[x2] = other.__event.get(x2)
         return res
 
     @staticmethod

@@ -34,9 +34,9 @@ class Problem:
                 aux = factors_with_var.pop()
                 new_factor = new_factor.multiply_tables(aux)
             # Sum on the current 'var'.
-            new_factor.sum_on_var(var)
+            new_factor_aux = new_factor.sum_on_var(var)
             # Add factor to the remaining tables.
-            factors.append(new_factor)
+            factors.append(new_factor_aux)
             #### NORMALIZATION IS MISSING
         return factors
 
