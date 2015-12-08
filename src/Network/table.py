@@ -86,6 +86,14 @@ class Table:
                     new_table.add_event(Event(aux_dict, first_event.probability() * second_event.probability()))
         return new_table
 
+    def normalize(self):
+        total = 0
+        for event in self.__events:
+            total += event.probability()
+        if total != 0:
+            for event in self.__events:
+                event.set_probability(event.probability()/total)
+
     @staticmethod
     def deepcopy(other):
         t = Table(deepcopy(other.__variables))

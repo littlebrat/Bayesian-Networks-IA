@@ -37,6 +37,13 @@ class Problem:
             new_factor_aux = new_factor.sum_on_var(var)
             # Add factor to the remaining tables.
             factors.append(new_factor_aux)
-            #### NORMALIZATION IS MISSING
-        return factors
+        # Last step, multiply the remaining factors.
+        new_factor = factors.pop()
+        while factors:
+            aux = factors.pop()
+            new_factor = new_factor.multiply_tables(aux)
+        # Normalization
+        new_factor.normalize()
+        return new_factor
+
 
