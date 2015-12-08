@@ -88,6 +88,9 @@ class Network:
         """
         self.__nodes[name] = Variable(values, alias, parents)
 
+    def vars(self):
+        return self.__nodes.keys()
+
     def var(self, name):
         return self.__nodes[name]
 

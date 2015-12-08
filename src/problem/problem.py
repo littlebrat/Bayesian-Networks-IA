@@ -1,4 +1,5 @@
 from Network.network import Network
+from random import shuffle
 
 
 class Problem:
@@ -8,8 +9,6 @@ class Problem:
 
     @staticmethod
     def ve_inference(bayesnet, query, ordering):
-        # The variable that we want to know.
-        distribution = query.wanted_variable()
         # Evidence we got from the file.
         evidence = query.evidence()
         # Get all the tables in the network.
@@ -45,5 +44,19 @@ class Problem:
         # Normalization
         new_factor.normalize()
         return new_factor
+
+    @staticmethod
+    def random_order(bayesnet, query):
+        # The variable that we want to know.
+        wanted = [query.wanted_variable()]
+        # Evidence we got from the file.
+        evidence = set(query.evidence())
+        # Get all the variables in the bayesian network
+        all_variables = set(bayesnet.vars())
+        order = all_variables.difference(wanted)
+        order = list(order.difference(evidence))
+        shuffle(order)
+        return order
+
 
 

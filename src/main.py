@@ -14,9 +14,9 @@ net = Network.from_file('test_files/enunciado.bn')
 
 print(net)
 
-res = Problem.ve_inference(net, qr, ['earthquake', 'alarm'])
+res = Problem.ve_inference(net, qr, Problem.random_order(net, qr))
 
-print('her')
+print(res)
 
 def main(args):
     return 0
