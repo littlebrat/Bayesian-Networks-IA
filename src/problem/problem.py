@@ -43,7 +43,7 @@ class Problem:
             new_factor = new_factor.multiply_tables(aux)
         # Normalization
         new_factor.normalize()
-        return new_factor
+        return new_factor, None
 
     @staticmethod
     def random_order(bayesnet, query):
@@ -66,10 +66,11 @@ class Problem:
             wanted = query.wanted_variable()
             res += 'QUERY ' + wanted +'\n'
             all_evidences = query.evidence()
+            res += 'EVIDENCE '
             for evidence in all_evidences.keys():
                 res += evidence + ' ' + all_evidences[evidence] + ' '
-            res += '\n' + 'QUERY DIST '
+            res += '\n' + 'QUERY_DIST '
             final_events = result.all_events()
             for event in final_events:
-                res += event[wanted] + ' ' + event.probability() + ' '
+                res += event.get_value(wanted) + ' ' + str(round(event.probability(), 3)) + ' '
             file.write(res)
