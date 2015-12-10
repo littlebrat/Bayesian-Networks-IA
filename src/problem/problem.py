@@ -1,5 +1,5 @@
-from Network.network import Network
 from random import shuffle
+from problem.logger import Logger
 
 
 class Problem:
@@ -9,6 +9,8 @@ class Problem:
 
     @staticmethod
     def ve_inference(bayesnet, query, ordering):
+        # Define the log for the algorithm
+        log = Logger()
         # Evidence we got from the file.
         evidence = query.evidence()
         # Get all the tables in the network.
@@ -18,32 +20,43 @@ class Problem:
             f.evidence_eliminate(evidence)
         # Main part of the algorithm.
         for var in ordering:
+            # Logging the variable name
+            log.log_it('------------------------- ELIMINATE VARIABLE ' + var + ' -------------------------')
             # Get factors with 'var' in them.
             factors_with_var = []
             factors_in = []
+            log.log_it('>>> RELEVANT TABLES')
             for f in factors:
                 if f.has_variable(var):
+                    # Logging the tables with variable var in them
+                    log.log_it(str(f))
                     factors_with_var.append(f)
                 else:
                     factors_in.append(f)
             factors = factors_in
-            # Multiply all the factors with 'var' in them.
             new_factor = factors_with_var.pop()
+            # Multiply all the factors with 'var' in them.
             while factors_with_var:
                 aux = factors_with_var.pop()
                 new_factor = new_factor.multiply_tables(aux)
+            log.log_it('>>> TABLE AFTER MULTIPLICATION' + '\n' + str(new_factor))
             # Sum on the current 'var'.
             new_factor_aux = new_factor.sum_on_var(var)
+            # Logging table after the sum on variable var
+            log.log_it('>>> TABLE AFTER SUM' + '\n' + str(new_factor_aux))
             # Add factor to the remaining tables.
             factors.append(new_factor_aux)
         # Last step, multiply the remaining factors.
         new_factor = factors.pop()
+        # Multiply remaining tables
         while factors:
             aux = factors.pop()
             new_factor = new_factor.multiply_tables(aux)
+        log.log_it('JOINT DISTRIBUTION ' + '\n' + str(new_factor))
         # Normalization
         new_factor.normalize()
-        return new_factor, None
+        log.log_it('FINAL DISTRIBUTION NORMALIZED' + '\n' + str(new_factor))
+        return new_factor, log
 
     @staticmethod
     def random_order(bayesnet, query):
@@ -73,4 +86,5 @@ class Problem:
             final_events = result.all_events()
             for event in final_events:
                 res += event.get_value(wanted) + ' ' + str(round(event.probability(), 3)) + ' '
+            res += log
             file.write(res)
