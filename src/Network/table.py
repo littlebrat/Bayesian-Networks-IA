@@ -1,5 +1,6 @@
 from copy import deepcopy
 from Network.event import Event
+from prettytable import PrettyTable
 
 
 class Table:
@@ -105,7 +106,14 @@ class Table:
         return t
 
     def __repr__(self):
-        r = 'Vars: ' + str(self.__variables) + '\n'
-        for x in self.__events:
-            r += str(x) + '\n'
-        return r[:-1]
+        indexes = deepcopy(self.__variables)
+        indexes.append('Probability')
+        r = PrettyTable(indexes)
+        r.padding_width = 1
+        for event in self.__events:
+            variable_values = []
+            for var in self.__variables:
+                variable_values.append(event.get_value(var))
+            variable_values.append(round(event.probability(),3))
+            r.add_row(variable_values)
+        return str(r)
