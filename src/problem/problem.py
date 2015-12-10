@@ -77,7 +77,7 @@ class Problem:
         with open(filename + '.sol', "w") as file:
             res = '########## SOLUTION ########## \n'
             wanted = query.wanted_variable()
-            res += 'QUERY ' + wanted +'\n'
+            res += 'QUERY ' + wanted + '\n'
             all_evidences = query.evidence()
             res += 'EVIDENCE '
             for evidence in all_evidences.keys():
@@ -86,5 +86,6 @@ class Problem:
             final_events = result.all_events()
             for event in final_events:
                 res += event.get_value(wanted) + ' ' + str(round(event.probability(), 3)) + ' '
-            res += log
+            if log is not None:
+                res += str(log)
             file.write(res)

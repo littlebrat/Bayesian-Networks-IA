@@ -38,7 +38,7 @@ def main(args):
 
             # Check if log mode is on
             if verbose:
-                Problem.to_file(query_name, result, query, str(log))
+                Problem.to_file(query_name, result, query, log)
             else:
                 Problem.to_file(query_name, result, query)
     return 0
