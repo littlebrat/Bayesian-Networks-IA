@@ -26,8 +26,12 @@ def main(args):
         query = None
 
         if args[2][-3:] == '.in':
-            query_name = args[2][:-3]
-            query = Query.from_file(args[2])
+            try:
+                query_name = args[2][:-3]
+                query = Query.from_file(args[2])
+            except:
+                print('Bad format of .in file.')
+                return 1
         else:
             return Exception('Expected .in file.')
 

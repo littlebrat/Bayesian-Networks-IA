@@ -19,6 +19,8 @@ class Query:
                     if len(words) == 2 * quantity + 2:
                         for i in range(2, 2 * quantity + 1, 2):
                             qr.__evidence[words[i].lower()] = words[i+1].lower()
+                    else:
+                        raise Exception('E1')
         return qr
 
     def wanted_variable(self):
