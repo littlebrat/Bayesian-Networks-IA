@@ -58,5 +58,18 @@ class Problem:
         shuffle(order)
         return order
 
-
-
+    @staticmethod
+    def to_file(filename, result, query, log=None):
+        # Method that outputs the solution in cnf file.
+        with open(filename + '.sol', "w") as file:
+            res = '########## SOLUTION ########## \n'
+            wanted = query.wanted_variable()
+            res += 'QUERY ' + wanted +'\n'
+            all_evidences = query.evidence()
+            for evidence in all_evidences.keys():
+                res += evidence + ' ' + all_evidences[evidence] + ' '
+            res += '\n' + 'QUERY DIST '
+            final_events = result.all_events()
+            for event in final_events:
+                res += event[wanted] + ' ' + event.probability() + ' '
+            file.write(res)

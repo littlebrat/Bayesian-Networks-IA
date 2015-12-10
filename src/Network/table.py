@@ -94,6 +94,9 @@ class Table:
             for event in self.__events:
                 event.set_probability(event.probability()/total)
 
+    def all_events(self):
+        return self.__events
+
     @staticmethod
     def deepcopy(other):
         t = Table(deepcopy(other.__variables))
