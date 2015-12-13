@@ -1,4 +1,4 @@
 # Query definition
 QUERY Intelligence
 # evidence definition
-EVIDENCE 0
+EVIDENCE 3 SAT 0 Letter 0 Grade 2
