@@ -1,0 +1,4 @@
+# Query definition
+QUERY Difficulty
+# evidence definition
+EVIDENCE 1 SAT 0

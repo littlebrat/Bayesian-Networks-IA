@@ -1,0 +1,71 @@
+# Variable specification
+VAR
+name Difficulty
+alias D
+values 0 1
+
+VAR
+name Intelligence
+alias I
+values 0 1
+
+VAR
+name Grade
+alias G
+parents I D
+values 1 2 3
+
+VAR
+name SAT
+alias S
+parents Intelligence
+values 0 1
+
+VAR
+name Letter
+alias L
+parents Grade
+values 0 1
+
+# CPT specification
+CPT
+var Difficulty
+table 0 0.6 1 0.4
+
+CPT
+var I
+table 0 0.7 1 0.3
+
+CPT
+var G
+table
+1 0 0 0.3
+1 0 1 0.05
+1 1 0 0.9
+1 1 1 0.5
+2 0 0 0.4
+2 0 1 0.25
+2 1 0 0.08
+2 1 1 0.3
+3 0 0 0.3
+3 0 1 0.7
+3 1 0 0.02
+3 1 1 0.2
+
+CPT
+var SAT
+table
+0 0 0.95
+0 1 0.2
+1 0 0.05
+1 1 0.8
+
+CPT
+var Letter
+table
+0 1 0.1
+0 2 0.4
+0 3 0.99
+1 1 0.9
+1 2 0.6
+1 3 0.01
